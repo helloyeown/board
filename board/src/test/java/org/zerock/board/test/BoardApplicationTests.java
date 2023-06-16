@@ -1,4 +1,4 @@
-package org.zerock.board;
+package org.zerock.board.test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
