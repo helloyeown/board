@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Product Regist Page</h1>
+
+    <input class="uploadInput" type="file" name="upload" multiple>
+    <!-- multiple: 여러 개 업로드 할 때 -->
+    <button class="uploadBtn">UPLOAD</button>
+
+    <div class="uploadDiv">
+        <ul class="uploadUL">
+
+        </ul>
+    </div>
+
+
+    <style>
+        .uploadUL{
+            list-style: none;
+            display: flex;
+        }
+        .uploadUL li{
+            margin: 1em;
+			background-color: lightpink;
+			padding: 1em;
+			border: 1px solid darksalmon;
+			border-radius: 0.2em;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        const uploadBtn = document.querySelector(".uploadBtn");
+		const uploadInput = document.querySelector(".uploadInput");
+		const uploadUL = document.querySelector(".uploadUL");
+
+		uploadBtn.addEventListener("click", e => {
+
+            e.preventDefault();
+            e.stopPropagation();
+            // 안전장치
+
+            console.dir("file 정보: " + uploadInput.files);		// file에 대한 정보
+
+            if(!uploadInput.files || uploadInput.files.length === 0){
+                // uploadInput의 파일이 없거나 사이즈가 0일 때
+                return;
+            }
+
+            const formData = new FormData();
+
+            for (let i = 0; i < uploadInput.files.length; i++){
+                    formData.append("files", uploadInput.files[i]);
+                    // 첨부 파일들을 files란 이름으로 업로드
+            }
+
+            console.dir(formData);
+
+            const header = {headers: {"Content-Type": "multipart/form-data"}};
+
+            axios.post('http://localhost:8080/upload', formData, header)
+            .then(res => {
+                const result = res.data;
+                console.log(result);
+                showProducts(result);
+            })
+
+        }, false)
+
+
+        const showProducts = (arr) => {
+            let str = "";
+
+            for(const uploadFile of arr){
+                // console.log(uploadFile);
+                const {fileName, link, uuid} = uploadFile;
+
+                str += `
+                <li>
+                    <div>
+                        <a href='http://localhost/${uuid}_${fileName}' target="_blank">
+                        <img src='http://localhost/${link}'/>
+                        </a>
+                        <p>${fileName}<button onclick="javascript:removeFile(event, '${uuid}', '${fileName}')">x</button></p>
+                    </div>
+                </li>`;
+            }
+            uploadUL.innerHTML += str;	// 업로드를 여러 번 할 경우를 대비해 '+=' 사용
+
+        }
+
+
+        const removeFile = (e, uuid, fileName) => {
+            e.preventDefault();
+			e.stopPropagation();
+            alert("remove file");
+
+            const liObj = e.target.closest("li");
+
+            console.log(liObj);
+            liObj.remove();
+        }
+
+    </script>
+
+
+</body>
+</html>
