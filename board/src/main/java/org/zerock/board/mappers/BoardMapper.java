@@ -8,4 +8,8 @@ public interface BoardMapper {
     
     List<BoardDTO> getList();
 
+    int regist(BoardDTO boardDTO);
+
+    BoardDTO getOne(int bno);
+
 }

@@ -7,8 +7,16 @@
 
 
 <select id="getList" resultType="org.zerock.board.dto.BoardDTO">
-    select * from tbl_board order by bno desc
+    select * from tbl_board order by bno desc limit 0,10
 </select>
 
+<insert id="regist">
+    insert into tbl_board (title,content,writer)
+    values (#{title}, #{content}, #{writer})
+</insert>
+
+<select id="getOne" resultType="org.zerock.board.dto.BoardDTO">
+    select * from tbl_board where bno = #{bno}
+</select>
 
 </mapper>

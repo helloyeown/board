@@ -857,43 +857,50 @@
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Bordered Table</h3>
+                      <h3 class="card-title">Regist Form</h3>
                     </div>
-                    <td>
-                      <form action="http://localhost:8080/board/regist" method="get">
-                      <button type="submit" class="btn btn-block btn-primary">글쓰기</button>
-                      </form>
-                    </td>
                     <!-- /.card-header -->
                     <div class="card-body">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Title</th>
-                            <th>Content</th>
-                            <th style="width: 40px">Writer</th>
-                          </tr>
-                        </thead>
-                        <tbody class="readBtn">
-                          <tr th:each="board : ${list}" th:data-bno=${board.bno}>
-                            <td th:text="${board.bno}">1.</td>
-                            <td th:text="${board.title}">title</td>
-                            <td th:text="${board.content}">content</td>
-                            <td th:text="${board.writer}">writer</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-12">
+                          <!-- general form elements -->
+                          <div class="card card-primary">
+                            <div class="card-header">
+                              <h3 class="card-title">Quick Example</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- 등록 폼 -->
+                            <!-- form start -->
+                            <form method="post">
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1">Title</label>
+                                  <input type="text" class="form-control" name="title">
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputPassword1">Content</label>
+                                  <input type="text" class="form-control" name="content">
+                                </div>
+                                <div class="form-group">
+                                  <label for="exampleInputPassword1">Writer</label>
+                                  <input type="text" class="form-control" name="writer">
+                                </div>
+                              </div>
+                              <!-- /.card-body -->
+              
+                              <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                          <!-- /.card -->
+                        </div>
+                        <!--/.col (left) -->
+                      </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                      <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                      </ul>
                     </div>
                   </div>
                   <!-- /.card -->
@@ -951,25 +958,5 @@
 <script src="/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
-
-
-
-<script layout:fragment="script" th:inline="javascript">
-
-  const readBtn = document.querySelector(".readBtn");
-
-  readBtn.addEventListener("click", e => {
-
-    const target = e.target;
-    const bno = target.closest("tr").getAttribute("data-bno");
-
-    // console.log(bno);
-
-    window.location.href = "/board/read/" + bno;
-
-  }, false)
-
-</script>
-
 </body>
 </html>
