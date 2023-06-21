@@ -7,7 +7,7 @@
 
 
 <select id="getList" resultType="org.zerock.board.dto.BoardDTO">
-    select * from tbl_board order by bno desc limit 0,10
+    select * from tbl_board where exist=true order by bno desc limit 0,10
 </select>
 
 <insert id="regist">
@@ -18,5 +18,13 @@
 <select id="getOne" resultType="org.zerock.board.dto.BoardDTO">
     select * from tbl_board where bno = #{bno}
 </select>
+
+<update id="modify">
+    update tbl_board set title=#{title}, content=#{content}, updateDate=now() where bno=#{bno}
+</update>
+
+<update id="delete">
+    update tbl_board set exist = false where bno=#{bno}
+</update>
 
 </mapper>

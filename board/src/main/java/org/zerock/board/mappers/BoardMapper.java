@@ -12,4 +12,8 @@ public interface BoardMapper {
 
     BoardDTO getOne(int bno);
 
+    void modify(BoardDTO boardDTO);
+
+    void delete(int bno);
+
 }

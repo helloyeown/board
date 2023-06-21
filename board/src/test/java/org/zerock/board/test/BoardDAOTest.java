@@ -17,6 +17,29 @@ public class BoardDAOTest {
     @Autowired (required = false)
     private BoardMapper boardMapper;
 
+
+    // 삭제
+    @Test
+    public void delete(){
+        
+        boardMapper.delete(65629);
+
+    }
+
+
+    // 수정
+    @Test
+    public void modify(){
+        
+        BoardDTO dto = BoardDTO.builder()
+                    .bno(65629)
+                    .title("modify")
+                    .content("modify")
+                    .build();
+
+        boardMapper.modify(dto);
+    }
+
     
     // 조회
     @Test

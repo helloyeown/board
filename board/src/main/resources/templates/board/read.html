@@ -892,7 +892,12 @@
                               <!-- /.card-body -->
               
                               <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                                <form class="actionForm">
+                                  <button type="submit" class="btn btn-primary modifyBtn">MODIFY</button>
+                                  <button type="submit" class="btn btn-danger deleteBtn">DELTE</button>
+                                </form>
+
                               </div>
                             </form>
                           </div>
@@ -960,5 +965,27 @@
 <script src="/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/dist/js/pages/dashboard.js"></script>
+
+
+<script layout:fragment="script" th:inline="javascript">
+
+  const actionForm = document.querySelector(".actionForm");
+  const modifyBtn = document.querySelector(".modifyBtn");
+  const deleteBtn = document.querySelector(".deleteBtn");
+
+  modifyBtn.addEventListener("click", e => {
+    
+    // 이벤트 기본 동작(폼 제출)을 막기 위해
+    e.preventDefault();
+    e.stopPropagation();
+
+    actionForm.setAttribute("method", "get");
+    actionForm.setAttribute("action", "/board/list");
+    actionForm.submit();
+
+  })
+
+</script>
+
 </body>
 </html>

@@ -21,6 +21,12 @@ public class BoardServiceTest {
 
 
     @Test
+    public void delete(){
+        boardService.delete(65627);
+    }
+
+
+    @Test
     public void read(){
 
         BoardDTO dto = boardService.read(65628);

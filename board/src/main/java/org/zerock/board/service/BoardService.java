@@ -16,5 +16,8 @@ public interface BoardService {
 
     // 조회
     public BoardDTO read(int bno);
+
+    // 삭제
+    public void delete(int bno);
     
 }

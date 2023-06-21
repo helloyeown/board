@@ -61,4 +61,15 @@ public class BoardController {
 
     }
 
+
+    // 삭제
+    @PostMapping("delete/{bno}")
+    public String deleteBoard(@PathVariable int bno){
+        
+        boardService.delete(bno);
+
+        return "redirect:/board/list";
+
+    }
+
 }
