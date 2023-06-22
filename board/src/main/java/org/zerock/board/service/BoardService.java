@@ -4,20 +4,25 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.dto.BoardDTO;
+import org.zerock.board.dto.PageRequestDTO;
+import org.zerock.board.dto.PageResponseDTO;
 
 @Transactional
 public interface BoardService {
 
+    // 수정
+    void modify(BoardDTO boardDTO);
+
     // 목록
-    public List<BoardDTO> getList();
+    PageResponseDTO<BoardDTO> getList(PageRequestDTO pageRequestDTO);
 
     // 등록
-    public int insert(BoardDTO dto);
+    int insert(BoardDTO dto);
 
     // 조회
-    public BoardDTO read(int bno);
+    BoardDTO read(int bno);
 
     // 삭제
-    public void delete(int bno);
+    void delete(int bno);
     
 }

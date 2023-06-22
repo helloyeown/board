@@ -871,18 +871,24 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form method="post">
+                            <form class="actionForm">
+
+                                  <input type="hidden" class="form-control" name="bno" readonly
+                                  th:value="${board.bno}">
+
                               <div class="card-body">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1">Title</label>
                                   <input type="text" class="form-control" name="title" readonly
                                   th:value="${board.title}">
                                 </div>
+
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Content</label>
                                   <input type="text" class="form-control" name="content" readonly
                                   th:value="${board.content}">
                                 </div>
+
                                 <div class="form-group">
                                   <label for="exampleInputPassword1">Writer</label>
                                   <input type="text" class="form-control" name="writer" readonly
@@ -893,8 +899,8 @@
               
                               <div class="card-footer">
 
-                                <form class="actionForm">
-                                  <button type="submit" class="btn btn-primary modifyBtn">MODIFY</button>
+                                  <button type="submit" class="btn btn-primary listBtn">LIST</button>
+                                  <button type="submit" class="btn btn-info modifyBtn">MODIFY</button>
                                   <button type="submit" class="btn btn-danger deleteBtn">DELTE</button>
                                 </form>
 
@@ -972,6 +978,16 @@
   const actionForm = document.querySelector(".actionForm");
   const modifyBtn = document.querySelector(".modifyBtn");
   const deleteBtn = document.querySelector(".deleteBtn");
+  const listBtn = document.querySelector(".listBtn");
+
+  const bno = [[${board.bno}]]
+
+  listBtn.addEventListener("click", e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    window.location.href = "/board/list";
+  })
 
   modifyBtn.addEventListener("click", e => {
     
@@ -979,11 +995,24 @@
     e.preventDefault();
     e.stopPropagation();
 
-    actionForm.setAttribute("method", "get");
-    actionForm.setAttribute("action", "/board/list");
+    window.location.href = `/board/modify/${bno}`;
+   
+    // actionForm.setAttribute("action", `/board/modify/${bno}`)
+    // actionForm.setAttribute("method", `get`);
+    // actionForm.submit();
+
+  }, false)
+
+  deleteBtn.addEventListener("click", e => {
+    // 이벤트 기본 동작(폼 제출)을 막기 위해
+    e.preventDefault();
+    e.stopPropagation();
+
+    actionForm.setAttribute("action", `/board/delete/${bno}`)
+    actionForm.setAttribute("method", `post`);
     actionForm.submit();
 
-  })
+  },false)
 
 </script>
 

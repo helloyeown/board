@@ -21,6 +21,27 @@ import lombok.extern.log4j.Log4j2;
 public class BoardController {
 
     private final BoardService boardService;
+
+
+    // 수정 폼
+    @GetMapping("modify/{bno}")
+    public String modifyForm(@PathVariable int bno, Model model){
+        BoardDTO boardDTO = boardService.read(bno);
+        model.addAttribute("board", boardDTO);
+   
+        return "/board/modify";
+
+    }
+
+    // 수정
+    @PostMapping("modify/{bno}")
+    public String modify(@PathVariable int bno, BoardDTO boardDTO){
+        boardService.modify(boardDTO);
+
+        return "redirect:/board/read/" + bno;
+
+    }
+
     
     // 목록
     @GetMapping("list")
@@ -65,7 +86,8 @@ public class BoardController {
     // 삭제
     @PostMapping("delete/{bno}")
     public String deleteBoard(@PathVariable int bno){
-        
+        log.info("POST | DELETE");
+
         boardService.delete(bno);
 
         return "redirect:/board/list";

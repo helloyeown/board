@@ -7,7 +7,12 @@
 
 
 <select id="getList" resultType="org.zerock.board.dto.BoardDTO">
-    select * from tbl_board where exist=true order by bno desc limit 0,10
+    select * from tbl_board where exist=true order by bno desc limit #{skip}, #{size}
+</select>
+
+<!-- getListCount -->
+<select id="getCountEnd" resultType="long">
+    select count(*) from (select * from tbl_board where bno > 0 limit #{countEnd}) board
 </select>
 
 <insert id="regist">

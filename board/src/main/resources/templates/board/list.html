@@ -71,12 +71,6 @@
 </div>
 
 
-
-
-
-
-
-
   
 
 
@@ -84,6 +78,8 @@
 <script layout:fragment="script" th:inline="javascript">
 
   const readBtn = document.querySelector(".readBtn");
+  const pageArea = document.querySelector(".card-footer");
+  
 
   readBtn.addEventListener("click", e => {
 
@@ -95,6 +91,11 @@
     window.location.href = "/board/read/" + bno;
 
   }, false)
+
+
+  const paging = (page, size, total) => {
+
+  }
 
 </script>
 
