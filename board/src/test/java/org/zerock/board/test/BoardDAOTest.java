@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.zerock.board.dto.BoardDTO;
+import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.mappers.BoardMapper;
 
 import lombok.extern.log4j.Log4j2;
@@ -71,8 +72,10 @@ public class BoardDAOTest {
     // 목록
     @Test
     public void getListTest(){
+
+        PageRequestDTO dto = PageRequestDTO.builder().build();
         
-        List<BoardDTO> list = boardMapper.getList();
+        List<BoardDTO> list = boardMapper.getList(dto);
 
         log.info("getList Test...........");
         log.info(list);

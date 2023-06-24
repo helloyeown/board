@@ -43,7 +43,7 @@
                           </tr>
                         </thead>
                         <tbody class="readBtn">
-                          <tr th:each="board : ${list}" th:data-bno=${board.bno}>
+                          <tr th:each="board : ${list.list}" th:data-bno=${board.bno}>
                             <td th:text="${board.bno}">1.</td>
                             <td th:text="${board.title}">title</td>
                             <td th:text="${board.content}">content</td>
@@ -54,24 +54,18 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer clearfix">
-                      <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                      <ul class="pagination pagination-sm m-0 float-right paging">
+
                       </ul>
                     </div>
                   </div>
+                  <script src="/js/paging.js"></script>
                   <!-- /.card -->
           </section>
           <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-</div>
-
-
-  
+</div>  
 
 
 
@@ -79,23 +73,25 @@
 
   const readBtn = document.querySelector(".readBtn");
   const pageArea = document.querySelector(".card-footer");
+  const boardUL = document.querySelector(".paging");
+
+  const {page,size} = [[${PageRequestDTO}]];
+  const {total} = [[${PageResponseDTO}]];
+
+  const PageLIStr = makePages(page, size, total);
+  paging.innerHTML = PageLIStr;
   
 
-  readBtn.addEventListener("click", e => {
+  // readBtn.addEventListener("click", e => {
 
-    const target = e.target;
-    const bno = target.closest("tr").getAttribute("data-bno");
+  //   const target = e.target;
+  //   const bno = target.closest("tr").getAttribute("data-bno");
 
-    // console.log(bno);
+  //   // console.log(bno);
 
-    window.location.href = "/board/read/" + bno;
+  //   window.location.href = "/board/read/" + bno;
 
-  }, false)
-
-
-  const paging = (page, size, total) => {
-
-  }
+  // }, false)
 
 </script>
 
