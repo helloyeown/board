@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/lteLayout.html}">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+
+<div layout:fragment="content">
+  <h1>Sign in Page</h1>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Bordered Table</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <form action="/member/signin" method="post">
+        <p>
+          <input type="text" name="username">
+        </p>
+        <p>
+          <input type="text" name="password">
+        </p>
+        <p>
+          <input type="checkbox" name="remember-me">Remember-Me
+        </p>
+        <p>
+          <button>Log IN</button>
+        </p>
+      </form>
+
+      <a href="/oauth2/authorization/kakao">KaKao</a>
+
+    </div>
+  </div>
+</div>
+
+<script layout:fragment="script">
+  const num = 10
+
+  console.log(jQuery)
+
+</script>
+
+
+</body>
+</html>
