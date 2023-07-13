@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.dto.PageResponseDTO;
@@ -37,7 +34,7 @@ public class BoardController {
 
     // 수정
     @PostMapping("modify/{bno}")
-    public String modify(@PathVariable int bno, BoardDTO boardDTO){
+    public String modify(@PathVariable int bno, BoardDTO boardDTO, PageRequestDTO pageRequestDTO){
         boardService.modify(boardDTO);
 
         return "redirect:/board/read/" + bno;
@@ -53,6 +50,7 @@ public class BoardController {
         PageResponseDTO<BoardDTO> list = boardService.getList(dto);
 
         model.addAttribute("list", list);
+        model.addAttribute("request", dto);
     }
 
     // 등록
@@ -73,12 +71,13 @@ public class BoardController {
 
     // 조회
     @GetMapping("read/{bno}")
-    public String readPage(@PathVariable int bno, Model model){
+    public String readPage(@PathVariable int bno, Model model, PageRequestDTO pageRequestDTO){
         
         log.info("GET read................");
 
         BoardDTO dto = boardService.read(bno);
         model.addAttribute("board", dto);
+        //model.addAttribute("requestDTO", requestDTO);
 
         return "/board/read";
 

@@ -1,5 +1,9 @@
 package org.zerock.board.dto;
 
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +21,12 @@ public class PageRequestDTO {
 	private int page = 1;
 	@Builder.Default
 	private int size = 10;
+
+    private String link;
+
+    // 검색
+    private String type;
+    private String keyword;
 
     public void setPage(int page){
         if(page<=0){
@@ -43,6 +53,43 @@ public class PageRequestDTO {
         int temp = (int)(Math.ceil(this.page / 10.0)) * (10 * this.size);
 
         return temp + 1;
+    }
+
+    // link
+    public String getLink() {
+
+        if (link == null) {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.append("page=" + this.page);
+            stringBuilder.append("&size=" + this.size);
+
+            // 검색 타입
+            if (type != null && type.length() > 0){
+                stringBuilder.append("&type=" + this.type);
+            }
+
+            // 검색어
+            if (keyword != null && keyword.length() > 0) {
+                try {
+                    stringBuilder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+                    // URL로 공백이나 특수문자가 들어오지 않도록 인코딩 처리
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            link = stringBuilder.toString();
+        }
+        return  link;
+    }
+
+    // type 배열로 반환 처리
+    public String[] getTypes(){
+        if(this.type == null || this.type.isEmpty()){
+            return null;
+        }
+        return this.type.split("");
     }
 
 }

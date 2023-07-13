@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
+</head>
 
 
 
@@ -13,87 +14,121 @@
 
 
 
-
-<div layout:fragment="content">
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">Bordered Table</h3>
+  <div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Bordered Table</h3>
+                </div>
+                <td>
+                    <div class="col-sm-1">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>SEARCH</label>
+                        <select class="form-control">
+                          <option>option 1</option>
+                          <option>option 2</option>
+                          <option>option 3</option>
+                          <option>option 4</option>
+                          <option>option 5</option>
+                        </select>
+                        <span class="input-group input-group-sm">
+                          <input type="text" class="form-control">
+                          <span class="input-group-append">
+                            <button type="button" class="btn btn-info btn-flat">Go!</button>
+                          </span>
+                      </div>
                     </div>
-                    <td>
-                      <form action="http://localhost:8080/board/regist" method="get">
-                      <button type="submit" class="btn btn-block btn-primary">글쓰기</button>
-                      </form>
-                    </td>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                      <table class="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Title</th>
-                            <th>Content</th>
-                            <th style="width: 40px">Writer</th>
-                          </tr>
-                        </thead>
-                        <tbody class="readBtn">
-                          <tr th:each="board : ${list.list}" th:data-bno=${board.bno}>
-                            <td th:text="${board.bno}">1.</td>
-                            <td th:text="${board.title}">title</td>
-                            <td th:text="${board.content}">content</td>
-                            <td th:text="${board.writer}">writer</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                      <ul class="pagination pagination-sm m-0 float-right paging">
+                    <div class="col-sm-1">
+                  <form action="http://localhost:8080/board/regist" method="get">
+                    <button type="submit" class="btn btn-block btn-primary">글쓰기</button>
+                  </form>
+                </div>
+                </td>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Title</th>
+                      <th>Content</th>
+                      <th style="width: 150px">Writer</th>
+                    </tr>
+                    </thead>
+                    <form class="actionForm" action="/board/read" method="get">
+                      <tbody class="readBtn">
+                      <input type="hidden" name="page" th:value="${request.page}">
+                      <input type="hidden" name="size" th:value="${request.size}">
+                      <tr th:each="board : ${list.list}" th:data-bno=${board.bno}>
+                        <td th:text="${board.bno}">1.</td>
+                        <td th:text="${board.title}">title</td>
+                        <td th:text="${board.content}">content</td>
+                        <td th:text="${board.writer}">writer</td>
+                      </tr>
+                      </tbody>
+                    </form>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <ul class="pagination pagination-sm m-0 float-right paging">
 
-                      </ul>
-                    </div>
-                  </div>
-                  <script src="/js/paging.js"></script>
-                  <!-- /.card -->
-          </section>
-          <!-- /.content -->
+                  </ul>
+                </div>
+
+              </div>
+              <script src="/js/paging.js"></script>
+              <!-- /.card -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
   </div>
-  <!-- /.content-wrapper -->
-</div>  
 
 
 
-<script layout:fragment="script" th:inline="javascript">
+  <script layout:fragment="script" th:inline="javascript">
 
   const readBtn = document.querySelector(".readBtn");
   const pageArea = document.querySelector(".card-footer");
   const boardUL = document.querySelector(".paging");
+  const actionForm= document.querySelector(".actionForm")
 
-  const {page,size} = [[${PageRequestDTO}]];
-  const {total} = [[${PageResponseDTO}]];
+  const {page,size} = [[${request}]];
+  const {total} = [[${list}]];
 
   const PageLIStr = makePages(page, size, total);
-  paging.innerHTML = PageLIStr;
-  
 
-  // readBtn.addEventListener("click", e => {
+  console.log("----------------" + page, size, total);
+  // console.log(PageLIStr);
 
-  //   const target = e.target;
-  //   const bno = target.closest("tr").getAttribute("data-bno");
+  boardUL.innerHTML = PageLIStr;
 
-  //   // console.log(bno);
 
-  //   window.location.href = "/board/read/" + bno;
+  // 조회
+  readBtn.addEventListener("click", e => {
 
-  // }, false)
+    console.log("readBtn click..........")
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    const target = e.target;
+    const bno = target.closest("tr").getAttribute("data-bno")
+
+    actionForm.setAttribute("action",`/board/read/${bno}`)
+    actionForm.submit()
+
+  }, false)
 
 </script>
 
-</body>
+  </body>
 </html>

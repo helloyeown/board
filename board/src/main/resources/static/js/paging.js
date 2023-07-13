@@ -1,26 +1,43 @@
 function makePages(page, size, total) {
     let result = "";
 
+    console.log("makePages............")
+    // console.log(page, size, total)
+
     // 페이징 시작 번호
-    const startNum = (Math.ceil(Page/10) * 10) - 9;
-    
-    // 시작 번호가 1이면 이전 버튼 노출 안 되게
-    startNum == 1 ? "" : result += `<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>`;
+    const startNum = (Math.ceil(page/10) * 10) - 9;
+
+    //이전 페이지
+    if(startNum !== 1){
+        result += `<li class="page-item"><a class="page-link"
+        href="list?page=${startNum-1}">이전</a></li>`
+        }
 
     // 페이지 번호 변수
-    let tmp = startNum;
+    let temp = startNum;
+    // console.log("temp: " + temp)
 
     // 페이징 버튼 동적 생성
-    while (true) {
-        if(tmp * 10 > total) {
-            break;
-        }
-        
-        tmp++;
-    }
+    while(true){
 
-    // 다음 버튼 노출 여부
-    total % (size * 10) == 1 ? `<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>` : "";
+        if(temp * size > total){
+          break;
+        }
+
+        result +=`<li class="page-item"><a class="page-link"
+        href="list?page=${temp}">${temp}</a></li>`
+        // console.log("result", result)
+        temp++;
+
+      }
+
+    if(total % (size * 10) === 1){
+        result += `<li class="page-item"><a class="page-link"
+        href="list?page=${startNum + 10}">다음</a></li>`
+      }
+
+    // console.log(temp + result)
+
 
     return result;
 
